@@ -12,6 +12,10 @@ router.post('/tasks', auth, async (req, res) => {
         owner: req.user._id
     })
 
+    if (typeof req.body.description !== 'string') {
+        return res.status(400).send({ error: 'Description must be a string' });
+    }
+
     try {
         await task.save()
         res.status(201).send(task)
@@ -57,12 +61,14 @@ router.get('/tasks', auth, async (req, res) => {
         })
         res.send(req.user.tasks)
     } catch (e) {
-        console.log(e)
+        // console.log(e)
         res.status(500).send()
     }
 })
 
 router.get('/tasks/:id', auth, async (req, res) => {
+
+    const _id = req.params.id
 
     try {
         const task = await Task.findOne({ _id, 'owner': req.user._id })

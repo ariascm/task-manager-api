@@ -37,7 +37,7 @@ router.post('/users/login', async (req, res) => {
         const token = await user.generateAuthToken()
         res.send({ user, token })
     } catch (e) {
-        console.log(e)
+        // console.log(e)
         res.status(400).send()
     }
 
@@ -113,7 +113,7 @@ router.delete('/users/me', auth, async (req, res) => {
         // if (!user) {
         //     return res.status(404).send()
         // }
-        console.log(req.user)
+        // console.log(req.user)
         await req.user.deleteOne()
         sendCancelationEmail(req.user.email, req.user.name)
         res.send(req.user)

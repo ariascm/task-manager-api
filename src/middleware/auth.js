@@ -15,7 +15,7 @@ const auth = (async (req, res, next) => {
         const decoded = jwt.verify(token, process.env.JWT_SECRET)
         // bucar usuario con el ID y el token especifico en el array user.tokens.token. (lleva comilla simple para buscar la key tokens.token)
         const user = await User.findOne({ _id: decoded._id, 'tokens.token': token })
-        console.log(user)
+        // console.log(user)
         if (!user) {
             throw new Error()
         }
@@ -26,7 +26,7 @@ const auth = (async (req, res, next) => {
 
         next()
     } catch (e) {
-        console.log(e)
+        // console.log(e)
         res.status(401).send({ error: 'Please authenticate' })
     }
 
